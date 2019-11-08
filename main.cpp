@@ -32,7 +32,7 @@ void jogadajog1 (int lin,int jog1col, char jog1nome [64], int jogo[6][7], bool *
   
     cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
     cin >> jog1col;
-    if (jog1col > 6 || jog1col < 0){
+    if (jog1col > 7 || jog1col < 0){
       cout << "Posição invalida!!!\n";
       *error1 = true;
       
@@ -57,7 +57,7 @@ void jogadajog2 (int lin,int jog2col, char jog1nome [64], int jogo[6][7], bool *
   
     cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
     cin >> jog2col;
-    if (jog2col > 6 || jog2col < 1){
+    if (jog2col > 7 || jog2col < 1){
       cout << "Posição invalida!!!\n";
       *error2 = true;
       
@@ -66,16 +66,59 @@ void jogadajog2 (int lin,int jog2col, char jog1nome [64], int jogo[6][7], bool *
       for (lin = 0;lin<6;lin++){
         if (jogo[lin][jog2col-1] == 1 || jogo[lin][jog2col-1] == 2){
           jogo[lin-1][jog2col-1] = 2;
+          *error2 = false;
           break;
         }
 
         else if (lin == 5) {
           jogo[lin][jog2col-1] = 2;
+          *error2 = false;
           break;
         }
       }
 
     }
+}
+
+void condvitoria1(bool *win1, int jogo[6][7]){
+  int linha = 0, coluna = 0, n = 0, jogadas_seguidas_horizontais = 0, jogadas_seguidas_verticais = 0;
+  
+  for (n = 0; n<7; n++){
+    jogadas_seguidas_horizontais = 0;
+    for (linha = 0, coluna = 0+n; linha < 6; linha++) {
+      if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_horizontais ++;
+      }
+      if (jogadas_seguidas_horizontais == 4){
+       *win1 = true;
+       goto saida;
+      
+    }
+  }
+  }
+
+  for (n = 0; n<7; n++){
+    jogadas_seguidas_verticais = 0;
+    for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
+      if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_verticais ++;
+      }
+      if (jogadas_seguidas_verticais == 4){
+       *win1 = true;
+       goto saida;
+      
+    }
+  }
+  }
+
+  saida:;
+}
+
+void condvitoria2(bool *win2, int jogo[6][7]){
+  int linha = 0, coluna = 0;
+  for (linha = 0; linha < 6; linha++) {
+    
+  }
 }
 
 int main() {
@@ -84,6 +127,8 @@ int main() {
   int op_ini;
   bool error1 = false;
 	bool error2 = false;
+  bool win1 = false;
+  bool win2 = false;
   int jog1col = 0;
   int jog2col = 0;
 
@@ -112,9 +157,32 @@ int main() {
 
     while (1){
     exibirjogo(lin,col,jogo);
+    
     jogadajog1(lin,jog1col, jog1nome, jogo, &error1);
+
+    if (error1 == true){
+      while (error1 != false){
+      error1 = false;
+      jogadajog1(lin,jog1col, jog1nome, jogo, &error1);
+    }
+    }
+
+    condvitoria1(&win1, jogo);
+    if (win1 == true) {
+      cout << "VITORIAAAA";
+    }
     exibirjogo(lin,col,jogo);
     jogadajog2(lin,jog2col, jog2nome, jogo, &error2);
+
+    if (error2 == true){
+      while (error2 != false){
+      error2 = false;
+      jogadajog2(lin,jog2col, jog2nome, jogo, &error2);
+    }
+    }
+
+    condvitoria2(&win2, jogo);
+
     }
   }
 }
