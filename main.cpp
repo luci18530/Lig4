@@ -87,11 +87,12 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   for (n = 0; n<7; n++){
     jogadas_seguidas_horizontais = 0;
     for (linha = 0, coluna = 0+n; linha < 6; linha++) {
-      if (jogo[linha][coluna] == 1){
+      if (jogo[linha][coluna] == 1 && (jogo[linha+1][coluna] == 1 || )){
         jogadas_seguidas_horizontais ++;
       }
       if (jogadas_seguidas_horizontais == 4){
        *win1 = true;
+       cout << "\nVERTICAL\n";
        goto saida;
       
     }
@@ -101,11 +102,12 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   for (n = 0; n<7; n++){
     jogadas_seguidas_verticais = 0;
     for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
-      if (jogo[linha][coluna] == 1){
+      if (jogo[linha][coluna] == 1 && jogo[linha][coluna+1] == 1){
         jogadas_seguidas_verticais ++;
       }
       if (jogadas_seguidas_verticais == 4){
        *win1 = true;
+       cout << "\nHORIZONTAL\n";
        goto saida;
       
     }
@@ -121,6 +123,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     
     if (jogadas_seguidas_diagonais == 4){
        *win1 = true;
+       cout << "\nDIAGONAL 1\n";
        goto saida;
   }
   }
@@ -135,6 +138,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     
     if (jogadas_seguidas_diagonais == 4){
        *win1 = true;
+       cout << "\nDIAGONAL 2\n";
        goto saida;
   }
   }
@@ -149,6 +153,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     
     if (jogadas_seguidas_diagonais == 4){
        *win1 = true;
+       cout << "\nDIAGONAL 3\n";
        goto saida;
   }
   }
@@ -163,6 +168,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     
     if (jogadas_seguidas_diagonais == 4){
        *win1 = true;
+       cout << "\nDIAGONAL 4\n";
        goto saida;
   }
   }
@@ -190,7 +196,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   for (n = 0; n<7; n++){
     jogadas_seguidas_verticais = 0;
     for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
-      if (jogo[linha][coluna] == 2){
+      if (jogo[linha][coluna] == 2 && jogo[linha][coluna+1] == 2){
         jogadas_seguidas_verticais ++;
       }
       if (jogadas_seguidas_verticais == 4){
@@ -256,6 +262,8 @@ int main() {
     if (win1 == true) {
       cout << "Jogador " << jog1nome << " Venceu!\n\n";
       exibirjogo(lin,col,jogo);
+      cin.ignore();
+      cin.get();
       break;
     }
     exibirjogo(lin,col,jogo);
@@ -272,6 +280,8 @@ int main() {
     if (win2 == true) {
       cout << "Jogador " << jog1nome << " Venceu!\n\n";
       exibirjogo(lin,col,jogo);
+      cin.ignore();
+      cin.get();
       break;
     }
 
