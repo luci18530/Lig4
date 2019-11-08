@@ -7,7 +7,7 @@ void exibirjogo (int lin, int col, int jogo[6][7]){
       if (lin == 0){
       cout << "\n";}
       if (lin != 0 ){
-      cout << "\n------------\n";}
+      cout << "\n-------------\n";}
     for (col = 0; col<7; col++){
       if (col != 0 ){
       cout << "|";}
@@ -28,7 +28,7 @@ void exibirjogo (int lin, int col, int jogo[6][7]){
   cout << "\n\n";
 }
 
-void jogadajog1 (int jog1col, char jog1nome [64], int jogo[6][7], bool *error1){
+void jogadajog1 (int lin,int jog1col, char jog1nome [64], int jogo[6][7], bool *error1){
   
     cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
     cin >> jog1col;
@@ -37,7 +37,45 @@ void jogadajog1 (int jog1col, char jog1nome [64], int jogo[6][7], bool *error1){
       *error1 = true;
       
     }
-    else {jogo[jog1lin-1][jog1col-1] = 1;}
+    else {
+      for (lin = 0;lin<6;lin++){
+        if (jogo[lin][jog1col-1] == 1 || jogo[lin][jog1col-1] == 2){
+          jogo[lin-1][jog1col-1] = 1;
+          break;
+        }
+
+        else if (lin == 5) {
+          jogo[lin][jog1col-1] = 1;
+          break;
+        }
+      }
+
+    }
+}
+
+void jogadajog2 (int lin,int jog2col, char jog1nome [64], int jogo[6][7], bool *error2){
+  
+    cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
+    cin >> jog2col;
+    if (jog2col > 6 || jog2col < 1){
+      cout << "Posição invalida!!!\n";
+      *error2 = true;
+      
+    }
+    else {
+      for (lin = 0;lin<6;lin++){
+        if (jogo[lin][jog2col-1] == 1 || jogo[lin][jog2col-1] == 2){
+          jogo[lin-1][jog2col-1] = 2;
+          break;
+        }
+
+        else if (lin == 5) {
+          jogo[lin][jog2col-1] = 2;
+          break;
+        }
+      }
+
+    }
 }
 
 int main() {
@@ -74,7 +112,9 @@ int main() {
 
     while (1){
     exibirjogo(lin,col,jogo);
-    jogadajog1(jog1col, jog1nome, jogo, &error1);
+    jogadajog1(lin,jog1col, jog1nome, jogo, &error1);
+    exibirjogo(lin,col,jogo);
+    jogadajog2(lin,jog2col, jog2nome, jogo, &error2);
     }
   }
 }
