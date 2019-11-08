@@ -84,40 +84,67 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   int linha = 0, coluna = 0, n = 0, jogadas_seguidas_horizontais = 0, jogadas_seguidas_verticais = 0,
   jogadas_seguidas_diagonais = 0;
   
-  for (n = 0; n<7; n++){
-    jogadas_seguidas_horizontais = 0;
-    for (linha = 0, coluna = 0+n; linha < 6; linha++) {
-      if (jogo[linha][coluna] == 1 && (jogo[linha+1][coluna] == 1 || )){
-        jogadas_seguidas_horizontais ++;
-      }
-      if (jogadas_seguidas_horizontais == 4){
-       *win1 = true;
+  for (coluna = 0; coluna < 6; coluna++){
+    if (
+    (
+    jogo[0][coluna] == 1 && 
+    jogo[1][coluna] == 1 &&
+    jogo[2][coluna] == 1 &&
+    jogo[3][coluna] == 1)||
+    (
+    jogo[1][coluna] == 1 && 
+    jogo[2][coluna] == 1 &&
+    jogo[3][coluna] == 1 &&
+    jogo[4][coluna] == 1)||
+    (
+    jogo[2][coluna] == 1 && 
+    jogo[3][coluna] == 1 &&
+    jogo[4][coluna] == 1 &&
+    jogo[5][coluna] == 1)
+    )
+    {
+      *win1 = true;
        cout << "\nVERTICAL\n";
        goto saida;
-      
     }
-  }
   }
 
-  for (n = 0; n<7; n++){
-    jogadas_seguidas_verticais = 0;
-    for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
-      if (jogo[linha][coluna] == 1 && jogo[linha][coluna+1] == 1){
-        jogadas_seguidas_verticais ++;
-      }
-      if (jogadas_seguidas_verticais == 4){
-       *win1 = true;
-       cout << "\nHORIZONTAL\n";
+  for (linha = 0; linha < 6; linha++){
+    if (
+    (
+    jogo[linha][0] == 1 && 
+    jogo[linha][1] == 1 &&
+    jogo[linha][2] == 1 &&
+    jogo[linha][3] == 1)||
+    (
+    jogo[linha][1] == 1 && 
+    jogo[linha][2] == 1 &&
+    jogo[linha][3] == 1 &&
+    jogo[linha][4] == 1)||
+    (
+    jogo[linha][2] == 1 && 
+    jogo[linha][3] == 1 &&
+    jogo[linha][4] == 1 &&
+    jogo[linha][5] == 1)||
+    (
+    jogo[linha][3] == 1 && 
+    jogo[linha][4] == 1 &&
+    jogo[linha][5] == 1 &&
+    jogo[linha][6] == 1)
+    )
+    {
+      *win1 = true;
+       cout << "\nVERTICAL\n";
        goto saida;
-      
     }
   }
-  }
+
+
 // CONDIÇÃO DIAGONAL 1
   for (n=0; n<3;n++){
     jogadas_seguidas_diagonais = 0;
   for (linha = 2-n, coluna = 0;linha <6; linha++, coluna++){
-    if (jogo[linha][coluna] == 1){
+    if (jogo[linha][coluna] == 1 && (jogo[linha-1][coluna-1] == 1 || jogo[linha+1][coluna+1] == 1) ){
         jogadas_seguidas_diagonais ++;
       }
     
