@@ -81,7 +81,8 @@ void jogadajog2 (int lin,int jog2col, char jog1nome [64], int jogo[6][7], bool *
 }
 
 void condvitoria1(bool *win1, int jogo[6][7]){
-  int linha = 0, coluna = 0, n = 0, jogadas_seguidas_horizontais = 0, jogadas_seguidas_verticais = 0;
+  int linha = 0, coluna = 0, n = 0, jogadas_seguidas_horizontais = 0, jogadas_seguidas_verticais = 0,
+  jogadas_seguidas_diagonais = 0;
   
   for (n = 0; n<7; n++){
     jogadas_seguidas_horizontais = 0;
@@ -110,7 +111,62 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     }
   }
   }
-
+// CONDIÇÃO DIAGONAL 1
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 2-n, coluna = 0;linha <6; linha++, coluna++){
+    if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win1 = true;
+       goto saida;
+  }
+  }
+  }
+// CONDIÇÃO DIAGONAL 2
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 0, coluna = 1+n;coluna <7; linha++, coluna++){
+    if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win1 = true;
+       goto saida;
+  }
+  }
+  }
+// CONDIÇÃO DIAGONAL 3
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 2-n, coluna = 6; linha <6; linha++, coluna--){
+    if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win1 = true;
+       goto saida;
+  }
+  }
+  }
+// CONDIÇÃO DIAGONAL 4
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 0, coluna = 5-n; coluna >=0; linha++, coluna--){
+    if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win1 = true;
+       goto saida;
+  }
+  }
+  }
   saida:;
 }
 
@@ -120,7 +176,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   for (n = 0; n<7; n++){
     jogadas_seguidas_horizontais = 0;
     for (linha = 0, coluna = 0+n; linha < 6; linha++) {
-      if (jogo[linha][coluna] == 1){
+      if (jogo[linha][coluna] == 2){
         jogadas_seguidas_horizontais ++;
       }
       if (jogadas_seguidas_horizontais == 4){
@@ -134,7 +190,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   for (n = 0; n<7; n++){
     jogadas_seguidas_verticais = 0;
     for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
-      if (jogo[linha][coluna] == 1){
+      if (jogo[linha][coluna] == 2){
         jogadas_seguidas_verticais ++;
       }
       if (jogadas_seguidas_verticais == 4){
@@ -198,7 +254,8 @@ int main() {
 
     condvitoria1(&win1, jogo);
     if (win1 == true) {
-      cout << "Jogador " << jog1nome << " Venceu!";
+      cout << "Jogador " << jog1nome << " Venceu!\n\n";
+      exibirjogo(lin,col,jogo);
       break;
     }
     exibirjogo(lin,col,jogo);
@@ -213,7 +270,8 @@ int main() {
 
     condvitoria2(&win2, jogo);
     if (win2 == true) {
-      cout << "Jogador " << jog1nome << " Venceu!";
+      cout << "Jogador " << jog1nome << " Venceu!\n\n";
+      exibirjogo(lin,col,jogo);
       break;
     }
 
