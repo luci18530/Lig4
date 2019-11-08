@@ -114,11 +114,38 @@ void condvitoria1(bool *win1, int jogo[6][7]){
   saida:;
 }
 
-void condvitoria2(bool *win2, int jogo[6][7]){
-  int linha = 0, coluna = 0;
-  for (linha = 0; linha < 6; linha++) {
-    
+  void condvitoria2(bool *win2, int jogo[6][7]){
+    int linha = 0, coluna = 0, n = 0, jogadas_seguidas_horizontais = 0, jogadas_seguidas_verticais = 0;
+  
+  for (n = 0; n<7; n++){
+    jogadas_seguidas_horizontais = 0;
+    for (linha = 0, coluna = 0+n; linha < 6; linha++) {
+      if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_horizontais ++;
+      }
+      if (jogadas_seguidas_horizontais == 4){
+       *win2 = true;
+       goto saida;
+      
+    }
   }
+  }
+
+  for (n = 0; n<7; n++){
+    jogadas_seguidas_verticais = 0;
+    for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
+      if (jogo[linha][coluna] == 1){
+        jogadas_seguidas_verticais ++;
+      }
+      if (jogadas_seguidas_verticais == 4){
+       *win2 = true;
+       goto saida;
+      
+    }
+  }
+  }
+
+  saida:;
 }
 
 int main() {
@@ -140,6 +167,8 @@ int main() {
       jogo[lin][col] = 0;
     }
   }
+
+  
 
   while (op_ini != 2){
     cout << "BEM VINDO AO LIG4\n" << "--------------------------\n" << "POR FAVOR DIGITE\n\n" << "1 - Jogar\n2 - Sair\n\n";
@@ -169,7 +198,8 @@ int main() {
 
     condvitoria1(&win1, jogo);
     if (win1 == true) {
-      cout << "VITORIAAAA";
+      cout << "Jogador " << jog1nome << " Venceu!";
+      break;
     }
     exibirjogo(lin,col,jogo);
     jogadajog2(lin,jog2col, jog2nome, jogo, &error2);
@@ -182,6 +212,10 @@ int main() {
     }
 
     condvitoria2(&win2, jogo);
+    if (win2 == true) {
+      cout << "Jogador " << jog1nome << " Venceu!";
+      break;
+    }
 
     }
   }
