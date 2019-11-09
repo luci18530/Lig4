@@ -382,7 +382,7 @@ int main() {
 
     condvitoria1(&win1, jogo);
     if (win1 == true) {
-      cout << "Jogador " << jog1nome << " Venceu!\n\n";
+      cout << "\nJogador " << jog1nome << " Venceu!\n\n";
       exibirjogo(lin,col,jogo);
       cin.ignore();
       cin.get();
@@ -400,7 +400,7 @@ int main() {
 
     condvitoria2(&win2, jogo);
     if (win2 == true) {
-      cout << "Jogador " << jog1nome << " Venceu!\n\n";
+      cout << "\nJogador " << jog2nome << " Venceu!\n\n";
       exibirjogo(lin,col,jogo);
       cout << "\nPressione qualquer tecla para continuar\n";
       cin.ignore();
