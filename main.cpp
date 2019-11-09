@@ -32,7 +32,7 @@ void jogadajog1 (int lin,int jog1col, char jog1nome [64], int jogo[6][7], bool *
   
     cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
     cin >> jog1col;
-    if (jog1col > 7 || jog1col < 0){
+    if (jog1col > 7 || jog1col < 0 || jogo[0][jog1col] == 1 || jogo[0][jog1col] == 2){
       cout << "Posição invalida!!!\n";
       *error1 = true;
       
@@ -57,7 +57,7 @@ void jogadajog2 (int lin,int jog2col, char jog1nome [64], int jogo[6][7], bool *
   
     cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
     cin >> jog2col;
-    if (jog2col > 7 || jog2col < 1){
+    if (jog2col > 7 || jog2col < 1 || jogo[0][jog2col] == 1 || jogo[0][jog2col] == 2){
       cout << "Posição invalida!!!\n";
       *error2 = true;
       
@@ -103,7 +103,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     )
     {
       *win1 = true;
-       cout << "\nVERTICAL\n";
+       
        goto saida;
     }
   }
@@ -133,13 +133,13 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     )
     {
       *win1 = true;
-       cout << "\nVERTICAL\n";
+       
        goto saida;
     }
   }
 
 
-
+// CONDIÇÃO DIAGONAL 1
   for (n=0; n<3;n++){
     jogadas_seguidas_diagonais = 0;
   for (linha = 2-n, coluna = 0;linha <6; linha++, coluna++){
@@ -179,7 +179,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     
     if (jogadas_seguidas_diagonais == 4){
        *win1 = true;
-       cout << "\nDIAGONAL 3\n";
+       
        goto saida;
   }
   }
@@ -194,7 +194,7 @@ void condvitoria1(bool *win1, int jogo[6][7]){
     
     if (jogadas_seguidas_diagonais == 4){
        *win1 = true;
-       cout << "\nDIAGONAL 4\n";
+       
        goto saida;
   }
   }
@@ -203,35 +203,124 @@ void condvitoria1(bool *win1, int jogo[6][7]){
 }
 
   void condvitoria2(bool *win2, int jogo[6][7]){
-    int linha = 0, coluna = 0, n = 0, jogadas_seguidas_horizontais = 0, jogadas_seguidas_verticais = 0;
+    int linha = 0, coluna = 0, n = 0, jogadas_seguidas_diagonais = 0;
   
-  for (n = 0; n<7; n++){
-    jogadas_seguidas_horizontais = 0;
-    for (linha = 0, coluna = 0+n; linha < 6; linha++) {
-      if (jogo[linha][coluna] == 2){
-        jogadas_seguidas_horizontais ++;
-      }
-      if (jogadas_seguidas_horizontais == 4){
-       *win2 = true;
+  for (coluna = 0; coluna < 6; coluna++){
+    if (
+    (
+    jogo[0][coluna] == 2 && 
+    jogo[1][coluna] == 2 &&
+    jogo[2][coluna] == 2 &&
+    jogo[3][coluna] == 2)||
+    (
+    jogo[1][coluna] == 2 && 
+    jogo[2][coluna] == 2 &&
+    jogo[3][coluna] == 2 &&
+    jogo[4][coluna] == 2)||
+    (
+    jogo[2][coluna] == 2 && 
+    jogo[3][coluna] == 2 &&
+    jogo[4][coluna] == 2 &&
+    jogo[5][coluna] == 2)
+    )
+    {
+      *win2 = true;
        goto saida;
-      
     }
+  }
+
+  for (linha = 0; linha < 6; linha++){
+    if (
+    (
+    jogo[linha][0] == 2 && 
+    jogo[linha][1] == 2 &&
+    jogo[linha][2] == 2 &&
+    jogo[linha][3] == 2)||
+    (
+    jogo[linha][1] == 2 && 
+    jogo[linha][2] == 2 &&
+    jogo[linha][3] == 2 &&
+    jogo[linha][4] == 2)||
+    (
+    jogo[linha][2] == 2 && 
+    jogo[linha][3] == 2 &&
+    jogo[linha][4] == 2 &&
+    jogo[linha][5] == 2)||
+    (
+    jogo[linha][3] == 2 && 
+    jogo[linha][4] == 2 &&
+    jogo[linha][5] == 2 &&
+    jogo[linha][6] == 2)
+    )
+    {
+      *win2 = true;
+       
+       goto saida;
+    }
+  }
+
+  // CONDIÇÃO DIAGONAL 1
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 2-n, coluna = 0;linha <6; linha++, coluna++){
+    if (jogo[linha][coluna] == 1 && (jogo[linha-1][coluna-1] == 1 || jogo[linha+1][coluna+1] == 1) ){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win2 = true;
+       
+       goto saida;
+  }
+  }
+  }
+// CONDIÇÃO DIAGONAL 2
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 0, coluna = 1+n;coluna <7; linha++, coluna++){
+    if (jogo[linha][coluna] == 1 && (jogo[linha-1][coluna-1] == 1 || jogo[linha+1][coluna+1] == 1)){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win2 = true;
+       
+       goto saida;
+  }
+  }
+  }
+// CONDIÇÃO DIAGONAL 3
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 2-n, coluna = 6; linha <6; linha++, coluna--){
+    if (jogo[linha][coluna] == 1 && (jogo[linha+1][coluna-1] == 1 || jogo[linha-1][coluna+1] == 1)){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win2 = true;
+       
+       goto saida;
+  }
+  }
+  }
+// CONDIÇÃO DIAGONAL 4
+  for (n=0; n<3;n++){
+    jogadas_seguidas_diagonais = 0;
+  for (linha = 0, coluna = 5-n; coluna >=0; linha++, coluna--){
+    if (jogo[linha][coluna] == 1 && (jogo[linha+1][coluna-1] == 1 || jogo[linha-1][coluna+1] == 1)){
+        jogadas_seguidas_diagonais ++;
+      }
+    
+    if (jogadas_seguidas_diagonais == 4){
+       *win2 = true;
+       
+       goto saida;
+  }
   }
   }
 
-  for (n = 0; n<7; n++){
-    jogadas_seguidas_verticais = 0;
-    for (linha = 0+n, coluna = 0; coluna < 7; coluna++) {
-      if (jogo[linha][coluna] == 2 && jogo[linha][coluna+1] == 2){
-        jogadas_seguidas_verticais ++;
-      }
-      if (jogadas_seguidas_verticais == 4){
-       *win2 = true;
-       goto saida;
-      
-    }
-  }
-  }
+
 
   saida:;
 }
