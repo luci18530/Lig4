@@ -28,6 +28,13 @@ void exibirjogo (int lin, int col, int jogo[6][7]){
   cout << "\n\n";
 }
 
+void clear (){
+  int a;
+  for (a=0;a<100;a++){
+    cout << "\n";
+  }
+}
+
 void jogadajog1 (int lin,int jog1col, char jog1nome [64], int jogo[6][7], bool *error1){
   
     cout << jog1nome << " : Escolha a coluna que você quer marcar: ";
@@ -339,9 +346,6 @@ int main() {
   char jog1nome [64];
 	char jog2nome [64];
 
-  
-
-  
 
   while (op_ini != 2){
     cout << "BEM VINDO AO LIG4\n" << "--------------------------\n" << "POR FAVOR DIGITE\n\n" << "1 - Jogar\n2 - Sair\n\n";
@@ -372,6 +376,7 @@ int main() {
     exibirjogo(lin,col,jogo);
     
     jogadajog1(lin,jog1col, jog1nome, jogo, &error1);
+    clear();
 
     if (error1 == true){
       while (error1 != false){
@@ -382,14 +387,18 @@ int main() {
 
     condvitoria1(&win1, jogo);
     if (win1 == true) {
-      cout << "\nJogador " << jog1nome << " Venceu!\n\n";
+      cout << "\nJogador " << jog1nome << " Venceu!\n\nResultado:\n\n";
       exibirjogo(lin,col,jogo);
+      cout<< "\nPressione qualquer tecla para voltar ao inicio\n";
       cin.ignore();
       cin.get();
+      clear();
       break;
     }
+
     exibirjogo(lin,col,jogo);
     jogadajog2(lin,jog2col, jog2nome, jogo, &error2);
+    clear();
 
     if (error2 == true){
       while (error2 != false){
@@ -402,9 +411,10 @@ int main() {
     if (win2 == true) {
       cout << "\nJogador " << jog2nome << " Venceu!\n\n";
       exibirjogo(lin,col,jogo);
-      cout << "\nPressione qualquer tecla para continuar\n";
+      cout << "\nPressione qualquer tecla para voltar ao inicio\n";
       cin.ignore();
       cin.get();
+      clear();
       break;
     }
 
